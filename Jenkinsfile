@@ -20,12 +20,15 @@ pipeline
                if (params.OPERATION == 'add')
                  {
                    result=a+b
+                 }  
                else if (params.OPERATION == 'sub')
                  {
                     result=a-b
+                 }
                else if (params.OPERATION == 'mul')
                  {
                     result=a*b
+                 }
                   
                  echo "Operation : ${params.OPERATION}"
 
