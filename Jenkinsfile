@@ -7,8 +7,8 @@ pipeline
          choices: ['add','sub','mul'],
          description: 'Select Operation'
          )
-         string(name:'A',defaultvalue:'0',description:'First number)
-         string(name:'B',defaultvalue:'0',description:'second number)
+         string(name: 'A',defaultvalue: '0',description: 'First number')
+         string(name: 'B',defaultvalue: '0',description: 'second number')
      }
      stages {
        stage('calculate'){
