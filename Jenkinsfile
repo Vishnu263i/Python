@@ -15,7 +15,7 @@ pipeline
           steps {
             script {
                 def a=params.A.toInteger()
-                def b=params.B.toInterger
+                def b=params.B.toInteger()
                 def result=0
                if (params.OPERATION == 'add')
                  {
