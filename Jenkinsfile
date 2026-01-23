@@ -4,7 +4,7 @@ pipeline
 
        choice(
          name: 'OPERATION'
-         choices: ['add','sub','mul' ],
+         choices: ['add','sub','mul'],
          description: 'Select Operation'
          )
          string(name:'A',defaultvalue:'0',description:'First number)
