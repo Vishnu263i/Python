@@ -3,7 +3,7 @@ pipeline
      parameters {
 
        choice(
-         name: 'OPERATION'
+         name: 'OPERATION',
          choices: ['add','sub','mul'],
          description: 'Select Operation'
          )
