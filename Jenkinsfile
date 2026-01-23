@@ -1,44 +1,32 @@
-pipeline
-     agent any
-     parameters {
-
-       choice(
-         name: 'OPERATION',
-         choices: ['add','sub','mul'],
-         description: 'Select Operation'
-         )
-         string(name: 'A',defaultvalue: '0',description: 'First number')
-         string(name: 'B',defaultvalue: '0',description: 'second number')
-     }
-     stages {
-       stage('calculate'){
-          steps {
-            script {
-                def a=params.A.toInteger()
-                def b=params.B.toInteger()
-                def result=0
-               if (params.OPERATION == 'add')
-                 {
-                   result=a+b
-                 }  
-               else if (params.OPERATION == 'sub')
-                 {
-                    result=a-b
-                 }
-               else if (params.OPERATION == 'mul')
-                 {
-                    result=a*b
-                 }
-                  
-                 echo "Operation : ${params.OPERATION}"
-
-                 echo "A: ${a}"
-                 echo "B: ${b}"
-                 echo "Result: ${result}"
-                 }
-               }
-             }
-          }
-        
-
-              
+pipeline {
+    agent any
+ 
+    parameters {
+        choice(
+            name: 'OPERATION',
+            choices: ['add', 'sub', 'mul'],
+            description: 'Select operation'
+        )
+        string(name: 'A', defaultValue: '0', description: 'First number')
+        string(name: 'B', defaultValue: '0', description: 'Second number')
+    }
+ 
+    stages {
+        stage('Calculate') {
+            steps {
+                script {
+                    def a = params.A as Integer
+                    def b = params.B as Integer
+                    def result
+ 
+                    switch (params.OPERATION) {
+                        case 'add': result = a + b; break
+                        case 'sub': result = a - b; break
+                        case 'mul': result = a * b; break
+                        default: error("Unknown OPERATION: ${params.OPERATION}")
+                	    }
+			}
+		}
+	}
+	}
+}
