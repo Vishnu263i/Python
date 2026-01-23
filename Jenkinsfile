@@ -14,8 +14,8 @@ pipeline
        stage('calculate'){
           steps {
             script {
-                def a=params.A as Integer
-                def b=params.B as Interger
+                def a=params.A.toInteger()
+                def b=params.B.toInterger
                 def result=0
                if (params.OPERATION == 'add')
                  {
