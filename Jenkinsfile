@@ -1,60 +1,21 @@
 pipeline {
-  agent any
- 
-  parameters {
-    choice(
-      name: 'OPERATION',
-      choices: ['add', 'sub', 'mul'],
-      description: 'Select operation'
-    )
-    string(name: 'A', defaultValue: '0', description: 'First number')
-    string(name: 'B', defaultValue: '0', description: 'Second number')
-  }
- 
+  agent none   // we'll specify agents per stage
+
   stages {
-    stage('Validate & Calculate') {
+    stage('Build on Linux') {
+      agent { label 'linux' }   // make sure you have a node with this label
       steps {
-        script {
-          // Validate numeric inputs
-          if (!params.A?.isInteger() || !params.B?.isInteger()) {
-            error "Both A and B must be integers. Received: A='${params.A}', B='${params.B}'"
-          }
- 
-          Integer a = params.A.toInteger()
-          Integer b = params.B.toInteger()
-          def result
- 
-          switch (params.OPERATION) {
-            case 'add':
-              result = a + b
-              break
-            case 'sub':
-              result = a - b
-              break
-            case 'mul':
-              result = a * b
-              break
-            default:
-              error("Unknown OPERATION: ${params.OPERATION}")
-          }
- 
-          echo "Selected operation: ${params.OPERATION}"
-          echo "Inputs: A=${a}, B=${b}"
-          echo "Result: ${result}"
- 
-          // Make result visible on the job list
-          currentBuild.description = "op=${params.OPERATION}, A=${a}, B=${b}, result=${result}"
-        }
+        sh 'echo "Building on Linux..."'
+        sh 'uname -a'
       }
     }
-  }
- 
-  post {
-    success {
-      echo 'Calculation completed successfully.'
-    }
-    failure {
-      echo 'Pipeline failed. Check validation or operation value.'
+
+    stage('Test on Windows') {
+      agent { label 'windows' } // make sure you have a Windows node with this label
+      steps {
+        bat 'echo Testing on Windows...'
+        bat 'ver'
+      }
     }
   }
 }
